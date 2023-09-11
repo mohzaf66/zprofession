@@ -1,0 +1,38 @@
+{% load static %}
+{% include 'header2.html' %}
+<section style="background:#E7E7E7">
+    <div class="container">
+    <div class="row"style="padding-top:150px;padding-bottom:150px;">
+    <div class="col-sm-8"style="margin:auto;">
+    <div class="mx-1">
+
+
+   <!--Post Card Starts-->
+   {% for posts in posts %}
+   <a href="{% url 'blogdetail' posts.slug %}">
+    <div class="post-card  p-3 my-3 border rounded bg-light"style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
+    <h5 class="mt-2"style="font-weight:600;color:#4E4E4E;">{{posts.Title}}</h5>
+    <hr>
+    <p>{{posts.Description}}</p>
+    <div class="post-footer text-secondary mt-4">
+    <div style="float:right">
+    <span class="text-secondary" style="font-size:12px;">{{posts.Category}}</span> - <span class="text-secondary" style="font-size:12px;">{{posts.Date}}</span>
+    </div>
+    <div style="float-left;">
+    <span class="mx-2"><i class="far fa-eye text-secondary"></i> {{posts.Views}}</span>
+    <span class="mx-2"><i class="far fa-thumbs-up text-secondary"></i> {{posts.Likes}}</span>
+    <span class="mx-2"><i class="far fa-thumbs-down text-secondary"></i> {{posts.Dis_Likes}}</span>
+    <span class="mx-2"><i class="far fa-comment text-secondary"></i> {{posts.CommentsCounts}}</span> 
+    </div>
+    </div>
+    </div>
+   </a>
+   {% endfor %}
+   <!--Post Card Ends-->   
+          
+    </div>
+    </div>
+    </div>
+    </div>
+</section>
+{% include 'footer.html' %}

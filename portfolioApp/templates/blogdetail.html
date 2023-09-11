@@ -1,0 +1,106 @@
+{% include 'header2.html' %}
+<section style="background:#E7E7E7">
+    <div class="container">
+    <div class="row"style="padding-top:150px;padding-bottom:150px;">
+   <!--Post Detail Card Starts-->
+    <div class="col-sm-8"style="margin:auto;">
+    <div class="post-card  p-3 my-3 border rounded bg-light"style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;"id="printableArea">
+    <h2 class="mt-2"style="font-weight:600;color:#4E4E4E;">{{post.Title}}</h2>
+    <hr>
+    <p class="text-secondary">{{post.Description}}</p>
+    <div class="post-footer text-secondary mt-4">
+    <div style="float:right">
+    <span style="font-size:12px;">{{post.Category}}</span> - <span style="font-size:12px;">{{post.Date}}</span>
+    </div>
+    <div style="float-left;">
+    <span class="mx-2"><i class="far fa-eye text-secondary"></i> {{post.Views}}</span>
+    <span class="mx-2"><i class="far fa-thumbs-up text-secondary"></i> {{post.Likes}}</span>
+    <span class="mx-2"><i class="far fa-thumbs-down text-secondary"></i> {{post.Dis_Likes}}</span>
+    <span class="mx-2"><i class="far fa-comment text-secondary"></i> {{post.CommentsCounts}}</span>
+    <span class="mx-2"><a href="" onclick="printDiv('printableArea')"><i class="fas fa-print text-secondary"></i></a></span>
+   
+    </div>
+    </div>
+    <hr>
+    <div class="post-body py-5">
+    <p>{{post.Body | safe}}</p>
+    </div>
+    <div class="submit-reaction p-3 mb-5">
+    <span class="p-x3 mb-5" style="float:left">
+    <form action="" method="post">
+    {% csrf_token %}
+    <button  type="submit" name="Like"style="border:none;background:none;"><i class="far fa-3x fa-thumbs-up text-secondary"></i></button>
+    </form>
+    </span>
+    <span class="p-x3 mb-5" style="float:right">
+    <form action="" method="post">
+    {% csrf_token %}
+    <button type="submit" name="DisLike"style="border:none;background:none;"><i class="far fa-3x fa-thumbs-down text-secondary"></i></button>
+    </form>
+    </span>
+    </div>
+    
+    </div>
+
+    </div>
+   <!--Post Detail Card Ends-->
+
+   <!--Comment Section Starts-->  
+   <div class="col-sm-4">
+   <div class="mx-1 p-3 my-3 border rounded bg-light"style="box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
+   <h4 class="text-center">Comments</h4>
+   <hr>
+
+    {% for comment in comment %}
+    <div class="comment-card my-3" style="position:relative;">
+    <span><i class="fas fa-user text-secondary"></i></span> <b style="font-size:14px;">{{comment.Name}}</b> 
+    {% if user.is_superuser %}
+    <form action="">
+    <button type="submit" style="border:none;background:none;position:absolute;right:3px;top:0px;" name="deleteComment">
+    <span style="float:right;">
+    <i class="fas fa-times-circle text-secondary"></i>
+    </span>
+    </button>
+    </form>
+    {% endif %}
+    <p class="px-3 text-secondary"style="font-size:12px;line-height:20px;"> {{comment.Body}} </p>
+    <span class="text-secondary"style="font-size:12px;float:right;font-size:10px;">{{comment.Time}}</span>
+    <hr>
+    </div>
+    {% endfor %}
+
+
+    <div class="comment-form">
+    <h5 class="text-center">Add Your Comment</h5>
+    <form action=""method="post">
+    {% csrf_token %}
+    <input class="form-control mt-3 mb-2" style="font-size:12px;" type="text" placeholder="Name" name="name">
+    <textarea class="form-control" style="font-size:12px;" type="text" placeholder="Enter your text here" name="comment"></textarea>
+    <input class="form-control mt-2 btn-secondary" style="font-size:12px;" type="submit" name="Comment" value="Comment">
+    </form>
+    </div>
+
+   </div>
+   </div>
+   <!--Comment Section Ends-->  
+
+    </div>
+    </div>
+
+<script>
+function printDiv(divName) {
+     var printContents = document.getElementById(divName).innerHTML;
+     var originalContents = document.body.innerHTML;
+
+     document.body.innerHTML = printContents;
+
+     window.print();
+
+     document.body.innerHTML = originalContents;
+}
+</script>
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-60d8c69d9df8e1cb"></script>
+
+</section>
+{% include 'footer.html' %}
